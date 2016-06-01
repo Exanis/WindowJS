@@ -1,0 +1,16 @@
+.windowJSContent {
+    display: block;
+}
+
+.windowJSWindow {
+    display: inline-block;
+}
+
+.windowJSButton {
+    float: right;
+}
+
+.windowJSTitle > span {
+    padding-left: 10px;
+    padding-right: 10px;
+}
