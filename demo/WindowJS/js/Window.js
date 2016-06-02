@@ -152,6 +152,11 @@ $.widget("exanis.windowjs", {
         });
     },
 
+    _createIcon: function () {
+        if (WindowJS_NotificationArea !== null)
+            this._icon = WindowJS_NotificationArea.addWindow(this);
+    },
+
     _create: function () {
         if (this.options.container === null)
             this.options.container = $('body');
@@ -160,6 +165,7 @@ $.widget("exanis.windowjs", {
         this._createWindow();
         if (this.options.titleBar)
             this._createTitleBar();
+        this._createIcon();
 
         this._content.appendTo(this._window);
         this.update();
@@ -172,9 +178,6 @@ $.widget("exanis.windowjs", {
         } else if (key == 'title') {
             if (this._title)
                 this._title.html(this.options[key]);
-        } else if (key == 'icon') {
-            if (this._icon)
-                this._icon.attr('src', this.options[key]);
         } else if (key != 'loadingText' && key != 'update')
             window.console.error(key + " cannot be modified after window creation.");
     },
@@ -233,13 +236,8 @@ $.widget("exanis.windowjs", {
     },
 
     _onMinimize: function () {
-        if (this._trigger("Minimize")) {
-            if (WindowJS_NotificationArea === null)
-                window.console.error("Cannot minimize without notification area");
-            else {
-                WindowJS_NotificationArea.minimize(this);
-            }
-        }
+        if (this._icon !== null)
+            this._icon.trigger('click');
     },
 
     win: function () {
